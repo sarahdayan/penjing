@@ -21,6 +21,10 @@ export class SitemapTree {
     this.addParts(parts, [], resource);
   }
 
+  get siblings() {
+    return this.parent?.children || [];
+  }
+
   private addParts(parts: string[], usedParts: string[], resource: Resource) {
     if (parts.length <= 0) {
       this.resource = resource;

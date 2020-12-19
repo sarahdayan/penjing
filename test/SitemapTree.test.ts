@@ -96,4 +96,17 @@ describe('SitemapTree', () => {
       expect(child.url).toBe('path/second');
     });
   });
+  describe('#siblings', () => {
+    beforeEach(() => {
+      tree = new SitemapTree(null);
+
+      tree!.add(new Resource('path/first.txt'));
+      tree!.add(new Resource('path/second.txt'));
+    });
+    it('returns all siblings at the same level', () => {
+      const [child] = tree!.children[0].children;
+
+      expect(child.siblings).toHaveLength(2);
+    });
+  });
 });
