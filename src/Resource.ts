@@ -23,7 +23,8 @@ export class Resource {
   }
 
   private toDestinationPath(filePath: string) {
-    const { dir, name } = path.parse(filePath.replace(/^\/|^\\\\/g, ''));
+    const leadingSeparator = new RegExp(`^${path.sep}`, 'g');
+    const { dir, name } = path.parse(filePath.replace(leadingSeparator, ''));
 
     return path.normalize(`/${path.join(dir, name)}/`);
   }
