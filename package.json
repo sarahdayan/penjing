@@ -5,6 +5,9 @@
   "author": "Sarah Dayan",
   "main": "dist/index.js",
   "module": "dist/sitemaptree.esm.js",
+  "browser": {
+    "fs": false
+  },
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
