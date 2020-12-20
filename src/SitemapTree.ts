@@ -118,7 +118,7 @@ export class SitemapTree {
     const [currentPart, ...otherParts] = parts;
     const newUsedParts = [...usedParts, currentPart];
 
-    let [node] = this.children.filter(({ urlPart }) => urlPart === currentPart);
+    let node = this.children.find(({ urlPart }) => urlPart === currentPart);
 
     if (!node) {
       node = new SitemapTree(currentPart, this.urls);
