@@ -121,4 +121,24 @@ describe('SitemapTree', () => {
       expect(subTree.resource!.source).toBe('path/first.txt');
     });
   });
+  describe('#allUrls', () => {
+    beforeEach(() => {
+      tree = new SitemapTree(null);
+
+      tree!.add(new Resource('path/first.txt'));
+      tree!.add(new Resource('path/second.txt'));
+    });
+    it('returns all URLs', () => {
+      expect(tree!.allUrls).toEqual({
+        path: expect.any(SitemapTree),
+        'path/first': expect.any(SitemapTree),
+        'path/second': expect.any(SitemapTree),
+      });
+    });
+    it('points to the same object in memory for all sub-trees', () => {
+      const subTree = tree!.fromUrl('path/first');
+
+      expect(tree!.allUrls).toBe(subTree.allUrls);
+    });
+  });
 });
