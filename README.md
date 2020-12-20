@@ -29,6 +29,10 @@ tree.children[0].children[0].children[0].resource.source // "path/to/first.md"
 tree.fromUrl('path/to/second').children[0].resource.source // "path/to/second.md"
 ```
 
+### Windows
+
+Paths are normalized. If you're running this package on Windows, make sure to use `\\` instead of `/` in your paths, or `path.normalize` to ensure that your input paths match the ones in your `Resource` instances.
+
 ## API
 
 ### `SitemapTree.resource`

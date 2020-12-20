@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { Resource } from '.';
 
 export class SitemapTree {
@@ -75,7 +77,7 @@ export class SitemapTree {
    * @param resource The resource to add.
    */
   add(resource: Resource) {
-    const parts = resource.destination.split('/').filter(Boolean);
+    const parts = resource.destination.split(path.sep).filter(Boolean);
 
     this.addParts(parts, [], resource);
   }
@@ -95,7 +97,15 @@ export class SitemapTree {
    * @param resource The resource to retrieve the sub-tree from.
    */
   fromResource(resource: Resource) {
-    return this.fromUrl(resource.destination.replace(/^\/|\/$/g, ''));
+    const separator = path.sep === '/' ? '/' : '\\\\';
+    const leadingTrailingSeparators = new RegExp(
+      `^${separator}|${separator}$`,
+      'g'
+    );
+
+    return this.fromUrl(
+      resource.destination.replace(leadingTrailingSeparators, '')
+    );
   }
 
   private addParts(parts: string[], usedParts: string[], resource: Resource) {
@@ -116,7 +126,7 @@ export class SitemapTree {
     if (!child) {
       child = new SitemapTree(currentPart, this.urls);
       child._parent = this;
-      child._url = newUsedParts.join('/');
+      child._url = newUsedParts.join(path.sep);
 
       this.urls[child._url] = child;
 
