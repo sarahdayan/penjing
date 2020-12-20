@@ -1,25 +1,24 @@
 {
+  "name": "sitemaptree",
   "version": "0.1.0",
   "license": "MIT",
+  "author": "Sarah Dayan",
   "main": "dist/index.js",
+  "module": "dist/sitemaptree.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
     "src"
   ],
-  "engines": {
-    "node": ">=10"
-  },
   "scripts": {
-    "start": "tsdx watch",
+    "analyze": "size-limit --why",
     "build": "tsdx build",
-    "test": "tsdx test",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
-    "analyze": "size-limit --why"
+    "start": "tsdx watch",
+    "test": "tsdx test"
   },
-  "peerDependencies": {},
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -31,19 +30,9 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "sitemaptree",
-  "author": "Sarah Dayan",
-  "module": "dist/sitemaptree.esm.js",
-  "size-limit": [
-    {
-      "path": "dist/sitemaptree.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/sitemaptree.esm.js",
-      "limit": "10 KB"
-    }
-  ],
+  "resolutions": {
+    "**/typescript": "^4.1.3"
+  },
   "devDependencies": {
     "@size-limit/preset-small-lib": "^4.9.1",
     "@types/mock-fs": "4.13.0",
@@ -54,7 +43,18 @@
     "tslib": "^2.0.3",
     "typescript": "^4.1.3"
   },
-  "resolutions": {
-    "**/typescript": "^4.1.3"
-  }
+  "peerDependencies": {},
+  "engines": {
+    "node": ">=10"
+  },
+  "size-limit": [
+    {
+      "path": "dist/sitemaptree.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/sitemaptree.esm.js",
+      "limit": "10 KB"
+    }
+  ]
 }
