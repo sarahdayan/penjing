@@ -5,8 +5,9 @@ export class SitemapTree {
   parent: SitemapTree | null;
   children: SitemapTree[];
   url: string | null;
-  private urls: Record<string, SitemapTree>;
   urlPart;
+
+  private urls: Record<string, SitemapTree>;
 
   constructor(urlPart: string | null, urls?: Record<string, SitemapTree>) {
     this.resource = null;
@@ -17,20 +18,36 @@ export class SitemapTree {
     this.urlPart = urlPart;
   }
 
+  /**
+   * Add a resource to the sitemap tree.
+   *
+   * @param resource The resource to add.
+   */
   add(resource: Resource) {
     const parts = resource.destination.split('/').filter(Boolean);
 
     this.addParts(parts, [], resource);
   }
 
+  /**
+   * Retrieve a sub-tree in a sitemap tree from a URL.
+   *
+   * @param url The URL to retrieve the sub-tree from.
+   */
   fromUrl(url: string) {
     return this.urls[url];
   }
 
+  /**
+   * Retrieve all siblings.
+   */
   get siblings() {
     return this.parent?.children || [];
   }
 
+  /**
+   * Retrieve all URLs in the sitemap tree.
+   */
   get allUrls() {
     return this.urls;
   }
