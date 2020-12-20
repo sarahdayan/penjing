@@ -48,7 +48,7 @@
   },
   "peerDependencies": {},
   "engines": {
-    "node": ">=12"
+    "node": ">=10"
   },
   "size-limit": [
     {
