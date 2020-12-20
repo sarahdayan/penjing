@@ -1,10 +1,16 @@
-# SitemapTree
+<p align="center">
+  <h1 align="center">SitemapTree</h1>
+  <h4 align="center">A port of <a href="https://github.com/algolia/frontman/blob/master/lib/frontman/sitemap_tree.rb" target="_blank">Frontman's <code>SitemapTree</code></a> in TypeScript.</h4>
 
-A port of [Frontman's `SitemapTree`](https://github.com/algolia/frontman/blob/master/lib/frontman/sitemap_tree.rb) in TypeScript.
+  <p align="center">
+    <img src="https://img.shields.io/github/workflow/status/sarahdayan/sitemaptree/CI/master" alt="GitHub Workflow Status" />
+    <img src="https://img.shields.io/node/v/@sarahdayan/sitemaptree" alt="Node.js supported versions" />
+    <img src="https://img.shields.io/bundlephobia/minzip/@sarahdayan/sitemaptree" alt="npm bundle size" />
+    <img src="https://img.shields.io/npm/l/@sarahdayan/sitemaptree" alt="License" />
+  </p>
+</p>
 
 SitemapTree is a data structure to represent pages from a static site. It provides a way to retrieve any resource from the tree with constant time complexity.
-
-> Requires Node.js 12.x or later.
 
 ## Install
 
