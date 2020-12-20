@@ -5,13 +5,15 @@ export class SitemapTree {
   parent: SitemapTree | null;
   children: SitemapTree[];
   url: string | null;
+  private urls: Record<string, SitemapTree>;
   urlPart;
 
-  constructor(urlPart: string | null) {
+  constructor(urlPart: string | null, urls?: Record<string, SitemapTree>) {
     this.resource = null;
     this.parent = null;
     this.children = [];
     this.url = null;
+    this.urls = urls || {};
     this.urlPart = urlPart;
   }
 
@@ -19,6 +21,10 @@ export class SitemapTree {
     const parts = resource.destination.split('/').filter(Boolean);
 
     this.addParts(parts, [], resource);
+  }
+
+  fromUrl(url: string) {
+    return this.urls[url];
   }
 
   get siblings() {
@@ -41,9 +47,11 @@ export class SitemapTree {
     let child = matchingChild.length ? matchingChild[0] : null;
 
     if (!child) {
-      child = new SitemapTree(currentPart);
+      child = new SitemapTree(currentPart, this.urls);
       child.parent = this;
       child.url = newUsedParts.join('/');
+
+      this.urls[child.url] = child;
 
       this.children.push(child);
     }

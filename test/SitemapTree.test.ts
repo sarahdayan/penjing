@@ -109,4 +109,17 @@ describe('SitemapTree', () => {
       expect(child.siblings).toHaveLength(2);
     });
   });
+  describe('#fromUrl', () => {
+    beforeEach(() => {
+      tree = new SitemapTree(null);
+
+      tree!.add(new Resource('path/first.txt'));
+      tree!.add(new Resource('path/second.txt'));
+    });
+    it('returns sub-trees from URL', () => {
+      const subTree = tree!.fromUrl('path/first');
+
+      expect(subTree.resource!.source).toBe('path/first.txt');
+    });
+  });
 });
