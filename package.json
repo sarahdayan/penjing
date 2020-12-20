@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "license": "MIT",
   "author": "Sarah Dayan",
+  "sideEffects": false,
   "main": "dist/index.js",
   "module": "dist/sitemaptree.esm.js",
   "browser": {
