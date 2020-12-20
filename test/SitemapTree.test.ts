@@ -121,6 +121,19 @@ describe('SitemapTree', () => {
       expect(subTree.resource!.source).toBe('path/first.txt');
     });
   });
+  describe('#fromResource', () => {
+    beforeEach(() => {
+      tree = new SitemapTree(null);
+    });
+    it('returns sub-trees from URL', () => {
+      const resource = new Resource('path/first.txt');
+      tree!.add(resource);
+
+      const subTree = tree!.fromResource(resource);
+
+      expect(subTree.resource!.source).toBe('path/first.txt');
+    });
+  });
   describe('#allUrls', () => {
     beforeEach(() => {
       tree = new SitemapTree(null);

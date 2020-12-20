@@ -86,6 +86,15 @@ export class SitemapTree {
     return this.urls[url];
   }
 
+  /**
+   * Retrieve a sub-tree in a sitemap tree from a resource.
+   *
+   * @param resource The resource to retrieve the sub-tree from.
+   */
+  fromResource(resource: Resource) {
+    return this.fromUrl(resource.destination.replace(/^\/|\/$/g, ''));
+  }
+
   private addParts(parts: string[], usedParts: string[], resource: Resource) {
     if (parts.length <= 0) {
       this._resource = resource;
