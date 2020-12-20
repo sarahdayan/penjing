@@ -4,6 +4,8 @@ A port of [Frontman's `SitemapTree`](https://github.com/algolia/frontman/blob/ma
 
 SitemapTree is a data structure to represent pages from a static site. It provides a way to retrieve any resource from the tree with constant time complexity.
 
+> Requires Node.js 12.x or later.
+
 ## Install
 
 ```sh
