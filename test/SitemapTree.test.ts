@@ -24,7 +24,7 @@ afterAll(() => {
 describe('SitemapTree', () => {
   describe('initialization', () => {
     beforeEach(() => {
-      tree = new SitemapTree(null);
+      tree = new SitemapTree();
     });
     it('returns a null resource', () => {
       expect(tree!.resource).toBeNull();
@@ -44,7 +44,7 @@ describe('SitemapTree', () => {
   });
   describe('#add', () => {
     beforeEach(() => {
-      tree = new SitemapTree(null);
+      tree = new SitemapTree();
 
       tree!.add(new Resource('path/first.txt'));
       tree!.add(new Resource('path/second.txt'));
@@ -98,7 +98,7 @@ describe('SitemapTree', () => {
   });
   describe('#siblings', () => {
     beforeEach(() => {
-      tree = new SitemapTree(null);
+      tree = new SitemapTree();
 
       tree!.add(new Resource('path/first.txt'));
       tree!.add(new Resource('path/second.txt'));
@@ -111,7 +111,7 @@ describe('SitemapTree', () => {
   });
   describe('#fromUrl', () => {
     beforeEach(() => {
-      tree = new SitemapTree(null);
+      tree = new SitemapTree();
 
       tree!.add(new Resource('path/first.txt'));
     });
@@ -123,7 +123,7 @@ describe('SitemapTree', () => {
   });
   describe('#fromResource', () => {
     beforeEach(() => {
-      tree = new SitemapTree(null);
+      tree = new SitemapTree();
     });
     it('returns sub-trees from URL', () => {
       const resource = new Resource('path/first.txt');
@@ -136,7 +136,7 @@ describe('SitemapTree', () => {
   });
   describe('#allUrls', () => {
     beforeEach(() => {
-      tree = new SitemapTree(null);
+      tree = new SitemapTree();
 
       tree!.add(new Resource('path/first.txt'));
       tree!.add(new Resource('path/second.txt'));

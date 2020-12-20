@@ -8,7 +8,10 @@ export class SitemapTree {
   private _urlPart;
   private urls: Record<string, SitemapTree>;
 
-  constructor(urlPart: string | null, urls?: Record<string, SitemapTree>) {
+  constructor(
+    urlPart: string | null = null,
+    urls?: Record<string, SitemapTree>
+  ) {
     this._resource = null;
     this._parent = null;
     this._children = [];
