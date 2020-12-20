@@ -24,12 +24,14 @@ const tree = new SitemapTree()
 tree.add(new Resource('path/to/first.md'))
 tree.add(new Resource('path/to/second.md'))
 
-tree.children[0].children[0].children[0].source // "path/to/first.md"
+tree.children[0].children[0].children[0].resource.source // "path/to/first.md"
+
+tree.fromUrl('path/to/second').children[0].resource.source // "path/to/second.md"
 ```
 
 ## API
 
-### `SitemapTree.resources`
+### `SitemapTree.resource`
 
 > `Resource | null`
 
