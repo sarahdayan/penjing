@@ -7,9 +7,9 @@ SitemapTree is a data structure to represent pages from a static site. It provid
 ## Install
 
 ```sh
-npm install sitemaptree
+npm install @sarahdayan/sitemaptree
 # or
-yarn add sitemaptree
+yarn add @sarahdayan/sitemaptree
 ```
 
 ## Usage
