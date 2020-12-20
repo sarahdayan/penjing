@@ -117,22 +117,18 @@ export class SitemapTree {
 
     const [currentPart, ...otherParts] = parts;
     const newUsedParts = [...usedParts, currentPart];
-    const matchingChild = this._children.filter(
-      child => child._urlPart === currentPart
-    );
 
-    let child = matchingChild.length ? matchingChild[0] : null;
+    let [node] = this.children.filter(({ urlPart }) => urlPart === currentPart);
 
-    if (!child) {
-      child = new SitemapTree(currentPart, this.urls);
-      child._parent = this;
-      child._url = newUsedParts.join(path.sep);
+    if (!node) {
+      node = new SitemapTree(currentPart, this.urls);
+      node._parent = this;
+      node._url = newUsedParts.join(path.sep);
 
-      this.urls[child._url] = child;
-
-      this._children.push(child);
+      this.urls[node._url] = node;
+      this._children.push(node);
     }
 
-    child!.addParts(otherParts, newUsedParts, resource);
+    node!.addParts(otherParts, newUsedParts, resource);
   }
 }
