@@ -59,7 +59,7 @@ export class SitemapTree {
    * The siblings of the sitemap tree, including itself.
    */
   get siblings() {
-    return this._parent?._children || [];
+    return this._parent?._children || [this];
   }
 
   /**

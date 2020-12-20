@@ -108,6 +108,9 @@ describe('SitemapTree', () => {
 
       expect(child.siblings).toHaveLength(2);
     });
+    it('returns self from the top node', () => {
+      expect(tree!.siblings).toHaveLength(1);
+    });
   });
   describe('#fromUrl', () => {
     beforeEach(() => {
