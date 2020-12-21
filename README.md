@@ -23,7 +23,7 @@ yarn add @sarahdayan/sitemaptree
 ## Usage
 
 ```ts
-import { SitemapTree, Resource } from 'sitemaptree'
+import { SitemapTree, Resource } from '@sarahdayan/sitemaptree'
 
 const tree = new SitemapTree()
 
