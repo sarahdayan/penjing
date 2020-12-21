@@ -41,62 +41,70 @@ Paths are normalized. If you're running this package on Windows, make sure to us
 
 ## API
 
-### `SitemapTree.resource`
+### `SitemapTree`
+
+Create a tree of resources.
+
+#### `SitemapTree.resource`
 
 > `Resource | null`
 
 The attached resource.
 
-### `SitemapTree.parent`
+#### `SitemapTree.parent`
 
 > `SitemapTree | null`
 
 The parent of the sitemap tree.
 
-### `SitemapTree.children`
+#### `SitemapTree.children`
 
 > `SitemapTree[]`
 
 The children of the sitemap tree.
 
-### `SitemapTree.url`
+#### `SitemapTree.url`
 
 > `string | null`
 
 The URL of the sitemap tree.
 
-### `SitemapTree.urlPart`
+#### `SitemapTree.urlPart`
 
 > `string | null`
 
 The URL part of the sitemap tree.
 
-### `SitemapTree.siblings`
+#### `SitemapTree.siblings`
 
 > `SitemapTree[]`
 
 The siblings of the sitemap tree, including itself.
 
-### `SitemapTree.allUrls`
+#### `SitemapTree.allUrls`
 
 > `Record<string, SitemapTree>`
 
 All URLs in the sitemap tree.
 
-### `SitemapTree.add(resource)`
+#### `SitemapTree.add(resource)`
 
 > `(resource: Resource): void`
 
 Add a resource to the sitemap tree.
 
-### `SitemapTree.fromUrl(url)`
+#### `SitemapTree.fromUrl(url)`
 
 > `(url: string): SitemapTree`
 
 Retrieve a sub-tree in a sitemap tree from a URL.
 
-### `SitemapTree.fromResource(resource)`
+#### `SitemapTree.fromResource(resource)`
 
 > `(resource: Resource): SitemapTree`
 
 Retrieve a sub-tree in a sitemap tree from a resource.
+
+### `Resource`
+
+Create a resource from a file path.
