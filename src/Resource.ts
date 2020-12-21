@@ -1,13 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 
+const root = process.cwd();
+
 export class Resource {
   source;
   destination;
   data;
 
   constructor(sourcePath: string, destinationPath?: string) {
-    if (fs.existsSync(sourcePath)) {
+    if (fs.existsSync(path.join(root, sourcePath))) {
       this.source = sourcePath;
       this.destination = this.toDestinationPath(destinationPath || sourcePath);
       this.data = this.parse(sourcePath);
@@ -19,7 +21,7 @@ export class Resource {
   }
 
   private parse(filePath: string) {
-    return fs.readFileSync(filePath, 'utf8');
+    return fs.readFileSync(path.join(root, filePath), 'utf8');
   }
 
   private toDestinationPath(filePath: string) {
