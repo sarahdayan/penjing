@@ -10,7 +10,7 @@
   </p>
 </p>
 
-SitemapTree is a data structure to represent pages from a static site. It provides a way to retrieve any resource from the tree with constant time complexity.
+SitemapTree is a data structure to represent pages from a static site. It lets you retrieve any resource from the tree with constant time complexity.
 
 ## Install
 
