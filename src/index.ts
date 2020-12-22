@@ -1,2 +1,2 @@
-export * from './Resource';
-export * from './SitemapTree';
+export * from './resource';
+export * from './sitemaptree';
