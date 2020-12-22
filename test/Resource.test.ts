@@ -20,7 +20,7 @@ describe('Resource', () => {
     it('throws when passed a source path to an invalid file', () => {
       expect(() => {
         new Resource(path.normalize('path/to/invalid/file.txt'));
-      }).toThrowError(new Error('This file does not exist.'));
+      }).toThrowError(/ENOENT: no such file or directory/);
     });
   });
   describe('#source', () => {

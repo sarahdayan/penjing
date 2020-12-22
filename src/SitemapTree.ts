@@ -2,73 +2,78 @@ import path from 'path';
 
 import { Resource } from '.';
 
-export class SitemapTree {
-  private _resource: Resource | null;
-  private _parent: SitemapTree | null;
-  private _children: SitemapTree[];
-  private _url: string | null;
-  private _urlPart;
-  private urls: Record<string, SitemapTree>;
+function addParts(
+  tree: SitemapTree,
+  parts: string[],
+  usedParts: string[],
+  resource: Resource
+) {
+  if (parts.length <= 0) {
+    tree.resource = resource;
 
-  constructor(
-    urlPart: string | null = null,
-    urls?: Record<string, SitemapTree>
-  ) {
-    this._resource = null;
-    this._parent = null;
-    this._children = [];
-    this._url = null;
-    this.urls = urls || {};
-    this._urlPart = urlPart;
+    return;
   }
 
+  const [currentPart, ...otherParts] = parts;
+  const newUsedParts = [...usedParts, currentPart];
+
+  let node = tree.children.find(({ urlPart }) => urlPart === currentPart);
+
+  if (!node) {
+    node = new SitemapTree(currentPart, tree.allUrls);
+    node.parent = tree;
+    node.url = newUsedParts.join(path.sep);
+
+    tree.allUrls[node.url] = node;
+    tree.children.push(node);
+  }
+
+  addParts(node, otherParts, newUsedParts, resource);
+}
+
+export class SitemapTree {
   /**
    * The attached resource.
    */
-  get resource() {
-    return this._resource;
-  }
-
+  resource: Resource | null;
   /**
    * The parent of the sitemap tree.
    */
-  get parent() {
-    return this._parent;
-  }
-
+  parent: SitemapTree | null;
   /**
    * The children of the sitemap tree.
    */
-  get children() {
-    return this._children;
-  }
-
+  children: SitemapTree[];
   /**
    * The URL of the sitemap tree.
    */
-  get url() {
-    return this._url;
-  }
-
+  url: string | null;
+  /**
+   * All URLs in the sitemap tree.
+   */
+  allUrls: Record<string, SitemapTree>;
   /**
    * The URL part of the sitemap tree.
    */
-  get urlPart() {
-    return this._urlPart;
+  urlPart: string | null;
+
+  constructor(
+    urlPart: string | null = null,
+    urls: Record<string, SitemapTree> = {}
+  ) {
+    this.resource = null;
+    this.parent = null;
+    this.children = [];
+    this.url = null;
+    this.allUrls = urls;
+    this.urlPart = urlPart;
   }
 
   /**
    * The siblings of the sitemap tree, including itself.
    */
   get siblings() {
-    return this._parent?._children || [this];
-  }
-
-  /**
-   * All URLs in the sitemap tree.
-   */
-  get allUrls() {
-    return this.urls;
+    return this.parent?.children || [this];
   }
 
   /**
@@ -79,7 +84,7 @@ export class SitemapTree {
   add(resource: Resource) {
     const parts = resource.destination.split(path.sep).filter(Boolean);
 
-    this.addParts(parts, [], resource);
+    addParts(this, parts, [], resource);
   }
 
   /**
@@ -88,7 +93,7 @@ export class SitemapTree {
    * @param url The URL to retrieve the sub-tree from.
    */
   fromUrl(url: string) {
-    return this.urls[url];
+    return this.allUrls[url];
   }
 
   /**
@@ -106,29 +111,5 @@ export class SitemapTree {
     return this.fromUrl(
       resource.destination.replace(leadingTrailingSeparators, '')
     );
-  }
-
-  private addParts(parts: string[], usedParts: string[], resource: Resource) {
-    if (parts.length <= 0) {
-      this._resource = resource;
-
-      return;
-    }
-
-    const [currentPart, ...otherParts] = parts;
-    const newUsedParts = [...usedParts, currentPart];
-
-    let node = this.children.find(({ urlPart }) => urlPart === currentPart);
-
-    if (!node) {
-      node = new SitemapTree(currentPart, this.urls);
-      node._parent = this;
-      node._url = newUsedParts.join(path.sep);
-
-      this.urls[node._url] = node;
-      this._children.push(node);
-    }
-
-    node!.addParts(otherParts, newUsedParts, resource);
   }
 }
