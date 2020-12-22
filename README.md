@@ -23,12 +23,12 @@ yarn add @sarahdayan/sitemaptree
 ## Usage
 
 ```ts
-import { SitemapTree, Resource } from '@sarahdayan/sitemaptree'
+import { sitemaptree, resource } from '@sarahdayan/sitemaptree'
 
-const tree = new SitemapTree()
+const tree = sitemaptree()
 
-tree.add(new Resource('path/to/first.md'))
-tree.add(new Resource('path/to/second.md'))
+tree.add(resource('path/to/first.md'))
+tree.add(resource('path/to/second.md'))
 
 tree.children[0].children[0].children[0].resource.source // "path/to/first.md"
 
@@ -41,70 +41,74 @@ Paths are normalized. If you're running this package on Windows, make sure to us
 
 ## API
 
-### `SitemapTree`
+### `sitemaptree`
+
+> `(urlPart?: string | null): SitemapTree`
 
 Create a tree of resources.
 
-#### `SitemapTree.resource`
+#### `sitemaptree.resource`
 
 > `Resource | null`
 
 The attached resource.
 
-#### `SitemapTree.parent`
+#### `sitemaptree.parent`
 
 > `SitemapTree | null`
 
 The parent of the sitemap tree.
 
-#### `SitemapTree.children`
+#### `sitemaptree.children`
 
 > `SitemapTree[]`
 
 The children of the sitemap tree.
 
-#### `SitemapTree.url`
+#### `sitemaptree.url`
 
 > `string | null`
 
 The URL of the sitemap tree.
 
-#### `SitemapTree.urlPart`
+#### `sitemaptree.urlPart`
 
 > `string | null`
 
 The URL part of the sitemap tree.
 
-#### `SitemapTree.siblings`
+#### `sitemaptree.siblings`
 
 > `SitemapTree[]`
 
 The siblings of the sitemap tree, including itself.
 
-#### `SitemapTree.allUrls`
+#### `sitemaptree.urls`
 
 > `Record<string, SitemapTree>`
 
 All URLs in the sitemap tree.
 
-#### `SitemapTree.add(resource)`
+#### `sitemaptree.add(resource)`
 
 > `(resource: Resource): void`
 
 Add a resource to the sitemap tree.
 
-#### `SitemapTree.fromUrl(url)`
+#### `sitemaptree.fromUrl(url)`
 
 > `(url: string): SitemapTree`
 
 Retrieve a sub-tree in a sitemap tree from a URL.
 
-#### `SitemapTree.fromResource(resource)`
+#### `sitemaptree.fromResource(resource)`
 
 > `(resource: Resource): SitemapTree`
 
 Retrieve a sub-tree in a sitemap tree from a resource.
 
-### `Resource`
+### `resource`
+
+> `(sourcePath: string, destinationPath?: string): Resource`
 
 Create a resource from a file path.
