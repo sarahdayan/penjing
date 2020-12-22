@@ -2,100 +2,71 @@ import path from 'path';
 
 import { Resource } from '.';
 
-export class SitemapTree {
-  private _resource: Resource | null;
-  private _parent: SitemapTree | null;
-  private _children: SitemapTree[];
-  private _url: string | null;
-  private _urlPart;
-  private urls: Record<string, SitemapTree>;
+export type SitemapTree = InstanceType<typeof Sitemap>;
+
+function addParts(
+  tree: Sitemap,
+  parts: string[],
+  usedParts: string[],
+  resource: Resource
+) {
+  if (parts.length <= 0) {
+    tree.resource = resource;
+
+    return;
+  }
+
+  const [currentPart, ...otherParts] = parts;
+  const newUsedParts = [...usedParts, currentPart];
+
+  let node = tree.children.find(({ urlPart }) => urlPart === currentPart);
+
+  if (!node) {
+    node = new Sitemap(currentPart, tree.urls);
+    node.parent = tree;
+    node.url = newUsedParts.join(path.sep);
+
+    tree.urls[node.url] = node;
+    tree.children.push(node);
+  }
+
+  addParts(node, otherParts, newUsedParts, resource);
+}
+
+class Sitemap {
+  resource: Resource | null;
+  parent: Sitemap | null;
+  children: Sitemap[];
+  url: string | null;
+  urlPart: string | null;
+  urls: Record<string, Sitemap>;
 
   constructor(
     urlPart: string | null = null,
-    urls?: Record<string, SitemapTree>
+    urls: Record<string, Sitemap> = {}
   ) {
-    this._resource = null;
-    this._parent = null;
-    this._children = [];
-    this._url = null;
-    this.urls = urls || {};
-    this._urlPart = urlPart;
+    this.resource = null;
+    this.parent = null;
+    this.children = [];
+    this.url = null;
+    this.urls = urls;
+    this.urlPart = urlPart;
   }
 
-  /**
-   * The attached resource.
-   */
-  get resource() {
-    return this._resource;
-  }
-
-  /**
-   * The parent of the sitemap tree.
-   */
-  get parent() {
-    return this._parent;
-  }
-
-  /**
-   * The children of the sitemap tree.
-   */
-  get children() {
-    return this._children;
-  }
-
-  /**
-   * The URL of the sitemap tree.
-   */
-  get url() {
-    return this._url;
-  }
-
-  /**
-   * The URL part of the sitemap tree.
-   */
-  get urlPart() {
-    return this._urlPart;
-  }
-
-  /**
-   * The siblings of the sitemap tree, including itself.
-   */
   get siblings() {
-    return this._parent?._children || [this];
+    return this.parent?.children || [this];
   }
 
-  /**
-   * All URLs in the sitemap tree.
-   */
-  get allUrls() {
-    return this.urls;
-  }
-
-  /**
-   * Add a resource to the sitemap tree.
-   *
-   * @param resource The resource to add.
-   */
   add(resource: Resource) {
     const parts = resource.destination.split(path.sep).filter(Boolean);
 
-    this.addParts(parts, [], resource);
+    addParts(this, parts, [], resource);
   }
 
-  /**
-   * Retrieve a sub-tree in a sitemap tree from a URL.
-   *
-   * @param url The URL to retrieve the sub-tree from.
-   */
   fromUrl(url: string) {
     return this.urls[url];
   }
 
-  /**
-   * Retrieve a sub-tree in a sitemap tree from a resource.
-   *
-   * @param resource The resource to retrieve the sub-tree from.
-   */
   fromResource(resource: Resource) {
     const separator = path.sep === '/' ? '/' : '\\\\';
     const leadingTrailingSeparators = new RegExp(
@@ -107,28 +78,8 @@ export class SitemapTree {
       resource.destination.replace(leadingTrailingSeparators, '')
     );
   }
+}
 
-  private addParts(parts: string[], usedParts: string[], resource: Resource) {
-    if (parts.length <= 0) {
-      this._resource = resource;
-
-      return;
-    }
-
-    const [currentPart, ...otherParts] = parts;
-    const newUsedParts = [...usedParts, currentPart];
-
-    let node = this.children.find(({ urlPart }) => urlPart === currentPart);
-
-    if (!node) {
-      node = new SitemapTree(currentPart, this.urls);
-      node._parent = this;
-      node._url = newUsedParts.join(path.sep);
-
-      this.urls[node._url] = node;
-      this._children.push(node);
-    }
-
-    node!.addParts(otherParts, newUsedParts, resource);
-  }
+export function sitemaptree(urlPart: string | null = null) {
+  return new Sitemap(urlPart);
 }

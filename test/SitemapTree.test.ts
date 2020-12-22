@@ -1,7 +1,7 @@
 import path from 'path';
 import mock from 'mock-fs';
 
-import { SitemapTree, Resource } from '../src';
+import { resource, sitemaptree, SitemapTree } from '../src';
 
 let tree: SitemapTree | null = null;
 
@@ -25,7 +25,7 @@ afterAll(() => {
 describe('SitemapTree', () => {
   describe('initialization', () => {
     beforeEach(() => {
-      tree = new SitemapTree();
+      tree = sitemaptree();
     });
     it('returns a null resource', () => {
       expect(tree!.resource).toBeNull();
@@ -45,10 +45,10 @@ describe('SitemapTree', () => {
   });
   describe('#add', () => {
     beforeEach(() => {
-      tree = new SitemapTree();
+      tree = sitemaptree();
 
-      tree!.add(new Resource(path.normalize('path/first.txt')));
-      tree!.add(new Resource(path.normalize('path/second.txt')));
+      tree!.add(resource(path.normalize('path/first.txt')));
+      tree!.add(resource(path.normalize('path/second.txt')));
     });
     it('recursively adds the first level of the resource to the tree', () => {
       const child = tree!.children[0];
@@ -99,10 +99,10 @@ describe('SitemapTree', () => {
   });
   describe('#siblings', () => {
     beforeEach(() => {
-      tree = new SitemapTree();
+      tree = sitemaptree();
 
-      tree!.add(new Resource(path.normalize('path/first.txt')));
-      tree!.add(new Resource(path.normalize('path/second.txt')));
+      tree!.add(resource(path.normalize('path/first.txt')));
+      tree!.add(resource(path.normalize('path/second.txt')));
     });
     it('returns all siblings at the same level', () => {
       const [child] = tree!.children[0].children;
@@ -115,9 +115,9 @@ describe('SitemapTree', () => {
   });
   describe('#fromUrl', () => {
     beforeEach(() => {
-      tree = new SitemapTree();
+      tree = sitemaptree();
 
-      tree!.add(new Resource(path.normalize('path/first.txt')));
+      tree!.add(resource(path.normalize('path/first.txt')));
     });
     it('returns sub-trees from URL', () => {
       const subTree = tree!.fromUrl(path.normalize('path/first'));
@@ -127,35 +127,35 @@ describe('SitemapTree', () => {
   });
   describe('#fromResource', () => {
     beforeEach(() => {
-      tree = new SitemapTree();
+      tree = sitemaptree();
     });
     it('returns sub-trees from URL', () => {
-      const resource = new Resource(path.normalize('path/first.txt'));
-      tree!.add(resource);
+      const r = resource(path.normalize('path/first.txt'));
+      tree!.add(r);
 
-      const subTree = tree!.fromResource(resource);
+      const subTree = tree!.fromResource(r);
 
       expect(subTree.resource!.source).toBe(path.normalize('path/first.txt'));
     });
   });
-  describe('#allUrls', () => {
+  describe('#urls', () => {
     beforeEach(() => {
-      tree = new SitemapTree();
+      tree = sitemaptree();
 
-      tree!.add(new Resource(path.normalize('path/first.txt')));
-      tree!.add(new Resource(path.normalize('path/second.txt')));
+      tree!.add(resource(path.normalize('path/first.txt')));
+      tree!.add(resource(path.normalize('path/second.txt')));
     });
     it('returns all URLs', () => {
-      expect(tree!.allUrls).toEqual({
-        path: expect.any(SitemapTree),
-        [path.normalize('path/first')]: expect.any(SitemapTree),
-        [path.normalize('path/second')]: expect.any(SitemapTree),
-      });
+      expect(Object.keys(tree!.urls)).toEqual([
+        'path',
+        path.normalize('path/first'),
+        path.normalize('path/second'),
+      ]);
     });
     it('points to the same object in memory for all sub-trees', () => {
       const subTree = tree!.fromUrl(path.normalize('path/first'));
 
-      expect(tree!.allUrls).toBe(subTree.allUrls);
+      expect(tree!.urls).toBe(subTree.urls);
     });
   });
 });

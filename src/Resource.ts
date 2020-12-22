@@ -1,35 +1,34 @@
 import fs from 'fs';
 import path from 'path';
 
+export type Resource = {
+  source: string;
+  destination: string;
+  data: string;
+};
+
 const root = process.cwd();
 
-export class Resource {
-  source;
-  destination;
-  data;
+function getFileData(filePath: string) {
+  return fs.readFileSync(path.join(root, filePath), 'utf8');
+}
 
-  constructor(sourcePath: string, destinationPath?: string) {
-    if (fs.existsSync(path.join(root, sourcePath))) {
-      this.source = sourcePath;
-      this.destination = this.toDestinationPath(destinationPath || sourcePath);
-      this.data = this.parse(sourcePath);
+function getDestinationPath(filePath: string) {
+  const separator = path.sep === '/' ? '/' : '\\\\';
+  const leadingSeparator = new RegExp(`^${separator}`, 'g');
 
-      return;
-    }
+  const { dir, name } = path.parse(filePath.replace(leadingSeparator, ''));
 
-    throw new Error('This file does not exist.');
-  }
+  return path.normalize(`/${path.join(dir, name)}/`);
+}
 
-  private parse(filePath: string) {
-    return fs.readFileSync(path.join(root, filePath), 'utf8');
-  }
+export function resource(
+  sourcePath: string,
+  destinationPath?: string
+): Resource {
+  const source = sourcePath;
+  const destination = getDestinationPath(destinationPath || sourcePath);
+  const data = getFileData(sourcePath);
 
-  private toDestinationPath(filePath: string) {
-    const separator = path.sep === '/' ? '/' : '\\\\';
-    const leadingSeparator = new RegExp(`^${separator}`, 'g');
-
-    const { dir, name } = path.parse(filePath.replace(leadingSeparator, ''));
-
-    return path.normalize(`/${path.join(dir, name)}/`);
-  }
+  return { source, destination, data };
 }
