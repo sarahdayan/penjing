@@ -16,50 +16,78 @@ afterAll(() => {
 });
 
 describe('Resource', () => {
-  describe('errors', () => {
+  describe('instantation', () => {
+    it('instantiates a new resource from arguments', () => {
+      const sourcePath = path.normalize('path/to/valid/file.txt');
+      const destinationPath = path.normalize('/path/to/valid/file/');
+      const data = 'Some content.';
+
+      const resource = new Resource(sourcePath, destinationPath, data);
+
+      expect(resource.source).toBe(sourcePath);
+      expect(resource.destination).toBe(path.normalize(destinationPath));
+      expect(resource.data).toBe(data);
+    });
+    it('instantiates a new resource from a file path', () => {
+      const sourcePath = path.normalize('path/to/valid/file.txt');
+
+      const resource = Resource.createFromPath(sourcePath);
+
+      expect(resource.source).toBe(sourcePath);
+      expect(resource.data).toBe('Some content.');
+      expect(resource.destination).toBe(path.normalize('/path/to/valid/file/'));
+    });
     it('throws when passed a source path to an invalid file', () => {
       expect(() => {
-        new Resource(path.normalize('path/to/invalid/file.txt'));
+        Resource.createFromPath(path.normalize('path/to/invalid/file.txt'));
       }).toThrowError(/ENOENT: no such file or directory/);
     });
   });
-  describe('#source', () => {
-    it('returns the passed source path when valid', () => {
-      const sourcePath = path.normalize('path/to/valid/file.txt');
-      const r = new Resource(sourcePath);
+  describe('properties', () => {
+    describe('#source', () => {
+      it('returns the passed source path', () => {
+        const sourcePath = path.normalize('path/to/valid/file.txt');
+        const resource = Resource.createFromPath(sourcePath);
 
-      expect(r.source).toBe(sourcePath);
+        expect(resource.source).toBe(sourcePath);
+      });
     });
-  });
-  describe('#data', () => {
-    it('returns the content of the passed source', () => {
-      const r = new Resource(path.normalize('path/to/valid/file.txt'));
+    describe('#data', () => {
+      it('returns the content of the passed source', () => {
+        const resource = Resource.createFromPath(
+          path.normalize('path/to/valid/file.txt')
+        );
 
-      expect(r.data).toBe('Some content.');
+        expect(resource.data).toBe('Some content.');
+      });
     });
-  });
-  describe('#destination', () => {
-    it('returns the passed source path by default', () => {
-      const r = new Resource(path.normalize('path/to/valid/file.txt'));
+    describe('#destination', () => {
+      it('returns the passed source path by default', () => {
+        const resource = Resource.createFromPath(
+          path.normalize('path/to/valid/file.txt')
+        );
 
-      expect(r.destination).toBe(path.normalize('/path/to/valid/file/'));
-    });
-    it('returns the passed destination path when specified', () => {
-      const r = new Resource(
-        path.normalize('path/to/valid/file.txt'),
-        path.normalize('destination/url')
-      );
+        expect(resource.destination).toBe(
+          path.normalize('/path/to/valid/file/')
+        );
+      });
+      it('returns the passed destination path when specified', () => {
+        const resource = Resource.createFromPath(
+          path.normalize('path/to/valid/file.txt'),
+          path.normalize('destination/url')
+        );
 
-      expect(r.destination).toBe(path.normalize('/destination/url/'));
-    });
-    it('cleans up the path when it has leading and trailing slashes', () => {
-      const destinationPath = path.normalize('/destination/url/');
-      const r = new Resource(
-        path.normalize('path/to/valid/file.txt'),
-        destinationPath
-      );
+        expect(resource.destination).toBe(path.normalize('/destination/url/'));
+      });
+      it('cleans up the path when it has leading and trailing slashes', () => {
+        const destinationPath = path.normalize('/destination/url/');
+        const resource = Resource.createFromPath(
+          path.normalize('path/to/valid/file.txt'),
+          destinationPath
+        );
 
-      expect(r.destination).toBe(destinationPath);
+        expect(resource.destination).toBe(destinationPath);
+      });
     });
   });
 });

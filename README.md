@@ -26,10 +26,10 @@ yarn add penjing
 ```ts
 import { SitemapTree, Resource } from 'penjing'
 
-const tree = new SitemapTree()
+const tree = SitemapTree.create()
 
-tree.add(new Resource('path/to/first.md'))
-tree.add(new Resource('path/to/second.md'))
+tree.add(Resource.createFromPath('path/to/first.md'))
+tree.add(Resource.createFromPath('path/to/second.md'))
 
 tree.children[0].children[0].children[0].resource.source // "path/to/first.md"
 

@@ -57,10 +57,7 @@ export class SitemapTree {
    */
   urlPart: string | null;
 
-  constructor(
-    urlPart: string | null = null,
-    urls: Record<string, SitemapTree> = {}
-  ) {
+  constructor(urlPart: string | null, urls: Record<string, SitemapTree>) {
     this.resource = null;
     this.parent = null;
     this.children = [];
@@ -111,5 +108,12 @@ export class SitemapTree {
     return this.fromUrl(
       resource.destination.replace(leadingTrailingSeparators, '')
     );
+  }
+
+  /**
+   * Create a sitemap tree.
+   */
+  static create() {
+    return new SitemapTree(null, {});
   }
 }
