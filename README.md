@@ -3,6 +3,7 @@
   <h4 align="center">A port of <a href="https://github.com/algolia/frontman/blob/master/lib/frontman/sitemap_tree.rb" target="_blank">Frontman's <code>SitemapTree</code></a> in TypeScript.</h4>
 
   <p align="center">
+    <img src="https://img.shields.io/npm/v/penjing" alt="npm version" />
     <img src="https://img.shields.io/github/workflow/status/sarahdayan/sitemaptree/CI/master" alt="GitHub Workflow Status" />
     <img src="https://img.shields.io/node/v/penjing" alt="Node.js supported versions" />
     <img src="https://img.shields.io/bundlephobia/minzip/penjing" alt="npm bundle size" />
