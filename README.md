@@ -1,29 +1,29 @@
 <p align="center">
-  <h1 align="center">SitemapTree</h1>
+  <h1 align="center">Penjing</h1>
   <h4 align="center">A port of <a href="https://github.com/algolia/frontman/blob/master/lib/frontman/sitemap_tree.rb" target="_blank">Frontman's <code>SitemapTree</code></a> in TypeScript.</h4>
 
   <p align="center">
     <img src="https://img.shields.io/github/workflow/status/sarahdayan/sitemaptree/CI/master" alt="GitHub Workflow Status" />
-    <img src="https://img.shields.io/node/v/@sarahdayan/sitemaptree" alt="Node.js supported versions" />
-    <img src="https://img.shields.io/bundlephobia/minzip/@sarahdayan/sitemaptree" alt="npm bundle size" />
-    <img src="https://img.shields.io/npm/l/@sarahdayan/sitemaptree" alt="License" />
+    <img src="https://img.shields.io/node/v/penjing" alt="Node.js supported versions" />
+    <img src="https://img.shields.io/bundlephobia/minzip/penjing" alt="npm bundle size" />
+    <img src="https://img.shields.io/npm/l/penjing" alt="License" />
   </p>
 </p>
 
-SitemapTree is a data structure to represent pages from a static site. It lets you retrieve any resource from the tree with constant time complexity.
+Penjing is a data structure to represent pages from a static site. It lets you retrieve any resource from the tree with constant time complexity.
 
 ## Install
 
 ```sh
-npm install @sarahdayan/sitemaptree
+npm install penjing
 # or
-yarn add @sarahdayan/sitemaptree
+yarn add penjing
 ```
 
 ## Usage
 
 ```ts
-import { SitemapTree, Resource } from '@sarahdayan/sitemaptree'
+import { SitemapTree, Resource } from 'penjing'
 
 const tree = new SitemapTree()
 
