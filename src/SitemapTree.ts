@@ -1,5 +1,4 @@
 import { Resource } from '.';
-import { leadingTrailingSeparators } from './utils';
 
 function addParts(
   tree: SitemapTree,
@@ -98,9 +97,7 @@ export class SitemapTree {
    * @param resource The resource to retrieve the sub-tree from.
    */
   fromResource(resource: Resource) {
-    return this.fromUrl(
-      resource.destination.replace(leadingTrailingSeparators, '')
-    );
+    return this.fromUrl(resource.destination.replace(/^\/|\/$/g, ''));
   }
 
   /**
