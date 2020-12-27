@@ -1,6 +1,7 @@
 import path from 'path';
 
 import { Resource } from '.';
+import { getEscapedSeparator } from './utils';
 
 function addParts(
   tree: SitemapTree,
@@ -99,8 +100,9 @@ export class SitemapTree {
    * @param resource The resource to retrieve the sub-tree from.
    */
   fromResource(resource: Resource) {
+    const separator = getEscapedSeparator(path.sep);
     const leadingTrailingSeparators = new RegExp(
-      `^${path.sep}|${path.sep}$`,
+      `^${separator}|${separator}$`,
       'g'
     );
 
