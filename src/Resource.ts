@@ -1,14 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 
-import { getEscapedSeparator } from './utils';
+import { leadingTrailingSeparators } from './utils';
 
 const root = process.cwd();
 
 function getDestinationPath(filePath: string) {
-  const separator = getEscapedSeparator(path.sep);
-  const leadingSeparator = new RegExp(`^${separator}`, 'g');
-  const { dir, name } = path.parse(filePath.replace(leadingSeparator, ''));
+  const { dir, name } = path.parse(
+    filePath.replace(leadingTrailingSeparators, '')
+  );
 
   return `/${path
     .join(dir, name)
