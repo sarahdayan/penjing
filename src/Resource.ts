@@ -10,6 +10,8 @@ function getDestinationPath(filePath: string) {
     filePath.replace(leadingTrailingSeparators, '')
   );
 
+  console.log(dir, name);
+
   return `/${path
     .join(dir, name)
     .split(path.sep)
