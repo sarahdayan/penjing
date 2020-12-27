@@ -1,5 +1,3 @@
-import path from 'path';
-
 import { Resource } from '.';
 import { leadingTrailingSeparators } from './utils';
 
@@ -80,7 +78,7 @@ export class SitemapTree {
    * @param resource The resource to add.
    */
   add(resource: Resource) {
-    const parts = resource.destination.split(path.sep).filter(Boolean);
+    const parts = resource.destination.split('/').filter(Boolean);
 
     addParts(this, parts, [], resource);
   }
