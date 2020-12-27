@@ -1,31 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 
-import { leadingTrailingSeparators } from './utils';
-
 const root = process.cwd();
 
-function toForwardSeparators(filePath: string) {
-  return filePath.replace(new RegExp(`/|\\\\`, 'g'), '/');
-}
-
-function normalizeDestinationPath(destinationPath: string) {
-  const isNormalized =
-    destinationPath.startsWith('/') && destinationPath.endsWith('/');
-
-  return isNormalized
-    ? destinationPath
-    : `/${destinationPath.replace(leadingTrailingSeparators, '')}/`;
-}
-
 function getDestinationPath(filePath: string) {
-  const { dir, name } = path.parse(toForwardSeparators(filePath));
-  const destinationPath = path
-    .join(dir, name)
-    .split(path.sep)
-    .join('/');
+  const { dir, name } = path.parse(filePath.replace(/\/|\\\\/g, '/'));
+  const destinationPath = path.join(dir, name);
 
-  return normalizeDestinationPath(destinationPath);
+  const isNormalized = /^\/.+?\/$/g.test(destinationPath);
+
+  return isNormalized ? destinationPath : `/${destinationPath}/`;
 }
 
 function getFileData(filePath: string) {
