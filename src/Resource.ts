@@ -5,11 +5,11 @@ const root = process.cwd();
 
 function getDestinationPath(filePath: string) {
   const { dir, name } = path.parse(filePath.replace(/\/|\\/g, '/'));
-  const destinationPath = path.join(dir, name);
+  const joinedPath = path.join(dir, name);
 
-  const isNormalized = /^\/.+?\/$/g.test(destinationPath);
+  const isNormalized = /^\/.+?\/$/g.test(joinedPath);
 
-  return isNormalized ? destinationPath : `/${destinationPath}/`;
+  return isNormalized ? joinedPath : `/${joinedPath.replace(/^\/|\/$/g, '')}/`;
 }
 
 function getFileData(filePath: string) {
