@@ -4,7 +4,7 @@ import path from 'path';
 const root = process.cwd();
 
 function getDestinationPath(filePath: string) {
-  const { dir, name } = path.parse(filePath.replace(/\/|\\\\/g, '/'));
+  const { dir, name } = path.parse(filePath.replace(/\/|\\/g, '/'));
   const destinationPath = path.join(dir, name);
 
   const isNormalized = /^\/.+?\/$/g.test(destinationPath);
