@@ -4,12 +4,12 @@ import path from 'path';
 const root = process.cwd();
 
 function getDestinationPath(filePath: string) {
-  const separator = path.sep === '/' ? '/' : '\\\\';
-  const leadingSeparator = new RegExp(`^${separator}`, 'g');
+  const { dir, name } = path.parse(filePath);
+  const joinedPath = path.join(dir, name).replace(/\/|\\/g, '/');
 
-  const { dir, name } = path.parse(filePath.replace(leadingSeparator, ''));
+  const isNormalized = /^\/.+?\/$/g.test(joinedPath);
 
-  return path.normalize(`/${path.join(dir, name)}/`);
+  return isNormalized ? joinedPath : `/${joinedPath.replace(/^\/|\/$/g, '')}/`;
 }
 
 function getFileData(filePath: string) {
