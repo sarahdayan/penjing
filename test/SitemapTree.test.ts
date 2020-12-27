@@ -70,12 +70,12 @@ describe('SitemapTree', () => {
       it('returns all URLs', () => {
         expect(tree!.allUrls).toEqual({
           path: expect.any(SitemapTree),
-          [path.normalize('path/first')]: expect.any(SitemapTree),
-          [path.normalize('path/second')]: expect.any(SitemapTree),
+          'path/first': expect.any(SitemapTree),
+          'path/second': expect.any(SitemapTree),
         });
       });
       it('points to the same object in memory for all sub-trees', () => {
-        const subTree = tree!.fromUrl(path.normalize('path/first'));
+        const subTree = tree!.fromUrl('path/first');
 
         expect(tree!.allUrls).toBe(subTree.allUrls);
       });
@@ -107,9 +107,7 @@ describe('SitemapTree', () => {
         const [child] = tree!.children[0].children;
 
         expect(child.resource!.source).toBe(path.normalize('path/first.txt'));
-        expect(child.resource!.destination).toBe(
-          path.normalize('/path/first/')
-        );
+        expect(child.resource!.destination).toBe('/path/first/');
         expect(child.resource!.data).toBe('Some content.');
 
         expect(child.parent!.children).toHaveLength(2);
@@ -119,15 +117,13 @@ describe('SitemapTree', () => {
 
         expect(child.children).toEqual([]);
         expect(child.urlPart).toBe('first');
-        expect(child.url).toBe(path.normalize('path/first'));
+        expect(child.url).toBe('path/first');
       });
       it('recursively adds the second child of the second level of the resource to the tree', () => {
         const [, child] = tree!.children[0].children;
 
         expect(child.resource!.source).toBe(path.normalize('path/second.txt'));
-        expect(child.resource!.destination).toBe(
-          path.normalize('/path/second/')
-        );
+        expect(child.resource!.destination).toBe('/path/second/');
         expect(child.resource!.data).toBe('Some other content.');
 
         expect(child.parent!.children).toHaveLength(2);
@@ -137,7 +133,7 @@ describe('SitemapTree', () => {
 
         expect(child.children).toEqual([]);
         expect(child.urlPart).toBe('second');
-        expect(child.url).toBe(path.normalize('path/second'));
+        expect(child.url).toBe('path/second');
       });
     });
     describe('#fromUrl', () => {
@@ -147,7 +143,7 @@ describe('SitemapTree', () => {
         tree!.add(Resource.createFromPath(path.normalize('path/first.txt')));
       });
       it('returns sub-trees from URL', () => {
-        const subTree = tree!.fromUrl(path.normalize('path/first'));
+        const subTree = tree!.fromUrl('path/first');
 
         expect(subTree.resource!.source).toBe(path.normalize('path/first.txt'));
       });

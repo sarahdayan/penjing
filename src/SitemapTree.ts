@@ -22,7 +22,7 @@ function addParts(
   if (!node) {
     node = new SitemapTree(currentPart, tree.allUrls);
     node.parent = tree;
-    node.url = newUsedParts.join(path.sep);
+    node.url = newUsedParts.join('/');
 
     tree.allUrls[node.url] = node;
     tree.children.push(node);
@@ -99,9 +99,8 @@ export class SitemapTree {
    * @param resource The resource to retrieve the sub-tree from.
    */
   fromResource(resource: Resource) {
-    const separator = path.sep === '/' ? '/' : '\\\\';
     const leadingTrailingSeparators = new RegExp(
-      `^${separator}|${separator}$`,
+      `^${path.sep}|${path.sep}$`,
       'g'
     );
 

@@ -19,7 +19,7 @@ describe('Resource', () => {
   describe('instantation', () => {
     it('instantiates a new resource from arguments', () => {
       const sourcePath = path.normalize('path/to/valid/file.txt');
-      const destinationPath = path.normalize('/path/to/valid/file/');
+      const destinationPath = '/path/to/valid/file/';
       const data = 'Some content.';
 
       const resource = new Resource(sourcePath, destinationPath, data);
@@ -35,7 +35,7 @@ describe('Resource', () => {
 
       expect(resource.source).toBe(sourcePath);
       expect(resource.data).toBe('Some content.');
-      expect(resource.destination).toBe(path.normalize('/path/to/valid/file/'));
+      expect(resource.destination).toBe('/path/to/valid/file/');
     });
     it('throws when passed a source path to an invalid file', () => {
       expect(() => {
@@ -67,20 +67,18 @@ describe('Resource', () => {
           path.normalize('path/to/valid/file.txt')
         );
 
-        expect(resource.destination).toBe(
-          path.normalize('/path/to/valid/file/')
-        );
+        expect(resource.destination).toBe('/path/to/valid/file/');
       });
       it('returns the passed destination path when specified', () => {
         const resource = Resource.createFromPath(
           path.normalize('path/to/valid/file.txt'),
-          path.normalize('destination/url')
+          'destination/url'
         );
 
-        expect(resource.destination).toBe(path.normalize('/destination/url/'));
+        expect(resource.destination).toBe('/destination/url/');
       });
       it('cleans up the path when it has leading and trailing slashes', () => {
-        const destinationPath = path.normalize('/destination/url/');
+        const destinationPath = '/destination/url/';
         const resource = Resource.createFromPath(
           path.normalize('path/to/valid/file.txt'),
           destinationPath
