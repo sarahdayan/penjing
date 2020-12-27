@@ -25,7 +25,7 @@ describe('Resource', () => {
       const resource = new Resource(sourcePath, destinationPath, data);
 
       expect(resource.source).toBe(sourcePath);
-      expect(resource.destination).toBe(path.normalize(destinationPath));
+      expect(resource.destination).toBe(destinationPath);
       expect(resource.data).toBe(data);
     });
     it('instantiates a new resource from a file path', () => {
