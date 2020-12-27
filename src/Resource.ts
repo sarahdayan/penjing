@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 
+import { leadingTrailingSeparators } from './utils';
+
 const root = process.cwd();
 
 function toForwardSeparators(filePath: string) {
@@ -13,7 +15,7 @@ function normalizeDestinationPath(destinationPath: string) {
 
   return isNormalized
     ? destinationPath
-    : `/${destinationPath.replace(/^\/|\/$/g, '')}/`;
+    : `/${destinationPath.replace(leadingTrailingSeparators, '')}/`;
 }
 
 function getDestinationPath(filePath: string) {
