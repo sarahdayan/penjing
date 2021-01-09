@@ -40,7 +40,7 @@
   "devDependencies": {
     "@size-limit/preset-small-lib": "4.9.1",
     "@types/mock-fs": "4.13.0",
-    "husky": "4.3.6",
+    "husky": "4.3.7",
     "mock-fs": "4.13.0",
     "size-limit": "4.9.1",
     "tsdx": "0.14.1",
