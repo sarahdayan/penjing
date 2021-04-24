@@ -41,7 +41,7 @@
     "@size-limit/preset-small-lib": "4.10.2",
     "@types/mock-fs": "4.13.0",
     "husky": "4.3.8",
-    "mock-fs": "4.13.0",
+    "mock-fs": "4.14.0",
     "size-limit": "4.10.2",
     "tsdx": "0.14.1",
     "tslib": "2.2.0",
